@@ -68,6 +68,8 @@ public class DatabaseConfiguration {
         if (metricRegistry != null) {
             config.setMetricRegistry(metricRegistry);
         }
+
+        config.setMaximumPoolSize(5);
         return new HikariDataSource(config);
     }
     @Bean
