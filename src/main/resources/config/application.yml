@@ -61,7 +61,7 @@ jhipster:
         #allow-credentials: true
         #max-age: 1800
     mail:
-        from: ozay@localhost
+        from: noreply@ozay.us
     security:
         rememberme:
             # security key (this key should be unique for your application, and kept secret)

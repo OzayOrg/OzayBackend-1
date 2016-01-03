@@ -16,7 +16,6 @@ angular.module('ozayApp')
         if ($state.current.name == 'building-edit') {
             var successMessage = MessageService.getSuccessMessage();
             if(successMessage !== undefined){
-                UserInformation.process();
                 $scope.successTextAlert = successMessage;
             }
             $scope.contentTitle = 'Building Edit';
@@ -45,6 +44,7 @@ angular.module('ozayApp')
                             inherit: false,
                             notify: true
                         });
+
                     }, function(error) {
                         $scope.errorTextAlert = "Error! Please try later.";
                     }).$promise.finally(function() {

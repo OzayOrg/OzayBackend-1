@@ -7,7 +7,7 @@ angular.module('ozayApp')
                 parent: 'account',
                 url: '/register',
                 data: {
-                    authorities: [],
+                    authorities: ['ROLE_ADMIN'],
                     pageTitle: 'Registration'
                 },
                 views: {
@@ -17,7 +17,7 @@ angular.module('ozayApp')
                     }
                 },
                 resolve: {
-                    
+
                 }
             });
     });

@@ -3,9 +3,9 @@ package com.ozay.backend.service;
 import com.ozay.backend.domain.Authority;
 import com.ozay.backend.domain.PersistentToken;
 import com.ozay.backend.domain.User;
-import com.ozay.backend.repository.AuthorityRepository;
-import com.ozay.backend.repository.PersistentTokenRepository;
-import com.ozay.backend.repository.UserRepository;
+import com.ozay.backend.model.AccountInformation;
+import com.ozay.backend.model.Subscription;
+import com.ozay.backend.repository.*;
 import com.ozay.backend.security.SecurityUtils;
 import com.ozay.backend.service.util.RandomUtil;
 import com.ozay.backend.web.rest.dto.ManagedUserDTO;
@@ -43,6 +43,13 @@ public class UserService {
     @Inject
     private AuthorityRepository authorityRepository;
 
+    @Inject
+    private AccountRepository accountRepository;
+
+    @Inject
+    SubscriptionRepository subscriptionRepository;
+
+    @Transactional
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         userRepository.findOneByActivationKey(key)
@@ -51,6 +58,9 @@ public class UserService {
                 user.setActivated(true);
                 user.setActivationKey(null);
                 userRepository.save(user);
+                Subscription subscription = new Subscription();
+                subscription.setUserId(user.getId());
+                subscriptionRepository.create(subscription);
                 log.debug("Activated user: {}", user);
                 return user;
             });
@@ -180,10 +190,43 @@ public class UserService {
         return user;
     }
 
+
     @Transactional(readOnly = true)
     public User getUserWithAuthorities() {
-        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUser().getUsername()).get();
+        System.out.println("???????????");
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
         user.getAuthorities().size(); // eagerly load the association
+
+        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN") == false){
+            AccountInformation accountInformation = accountRepository.getLoginUserInformation();
+            this.addAuthorities(user, accountInformation);
+        }
+        return user;
+    }
+
+    private User addAuthorities(User user, AccountInformation accountInformation){
+        System.out.println(user);
+        if(accountInformation.getAuthorities() != null && accountInformation.getAuthorities().size() > 0){
+            for(String auth : accountInformation.getAuthorities()){
+                user.getAuthorities().add(new Authority(auth));
+            }
+        }
+        return user;
+    }
+
+
+    @Transactional(readOnly = true)
+    public User getUserWithAuthorities(Long buildingId, Long organizationId) {
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
+        user.getAuthorities().size(); // eagerly load the association
+
+        if(SecurityUtils.isCurrentUserInRole("ROLE_ADMIN") == false){
+            AccountInformation accountInformation = accountRepository.getLoginUserInformation(buildingId, organizationId);
+            if(accountInformation != null){
+                this.addAuthorities(user, accountInformation);
+            }
+        }
+
         return user;
     }
 

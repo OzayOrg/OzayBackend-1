@@ -81,6 +81,7 @@ angular.module('ozayApp', ['LocalStorageModule',
             }
         });
 
+        $httpProvider.interceptors.push('authInterceptor');
         $httpProvider.interceptors.push('errorHandlerInterceptor');
         $httpProvider.interceptors.push('authExpiredInterceptor');
         $httpProvider.interceptors.push('notificationInterceptor');

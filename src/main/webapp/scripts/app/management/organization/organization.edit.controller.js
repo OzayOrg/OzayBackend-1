@@ -27,7 +27,7 @@ angular.module('ozayApp')
                     }, function(error) {
                         $scope.errorTextAlert = "Error! Please try later.";
 
-                    }).finally(function() {
+                    }).$promise.finally(function() {
                         $scope.button = true;
                     });
                 } else {
