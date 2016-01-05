@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ozayApp')
-    .controller('NotificationRecordDetailController', function($scope, $state, $stateParams, NotificationTrack, Page, UserInformation) {
+    .controller('NotificationRecordDetailController', function($scope, $state, $stateParams, Page) {
         $scope.button = true;
         $scope.contentTitle = 'Notification Archives';
 
