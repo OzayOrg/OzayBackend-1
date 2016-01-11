@@ -1,4 +1,4 @@
-package com.ozay.backend.config;
+package com.ozay.backend.security;
 
 /**
  * Created by naofumiezaki on 10/30/15.
@@ -20,7 +20,7 @@ import javax.sql.DataSource;
  * Created by kn9b731 on 6/17/15
  */
 @Configuration
-public class ApplicationConfigurerAdapter extends WebMvcConfigurerAdapter implements EnvironmentAware  {
+public class ApplicationConfigurationAdapter extends WebMvcConfigurerAdapter implements EnvironmentAware  {
 
     private RelaxedPropertyResolver propertyResolver;
 
