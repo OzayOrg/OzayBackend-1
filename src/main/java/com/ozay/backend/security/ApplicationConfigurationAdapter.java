@@ -49,7 +49,6 @@ public class ApplicationConfigurationAdapter extends WebMvcConfigurerAdapter imp
             .excludePathPatterns("/api/organization-user/register")
             .excludePathPatterns("/api/page/organization-detail/*")
         ;
-
     }
 
     @Override

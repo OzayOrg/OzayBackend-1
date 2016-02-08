@@ -1,5 +1,9 @@
 function mockApiAccountCall() {
     inject(function($httpBackend) {
+            $httpBackend.whenGET(/api\/building/).respond({});
+    });
+
+    inject(function($httpBackend) {
         $httpBackend.whenGET(/api\/account.*/).respond({});
     });
 }
