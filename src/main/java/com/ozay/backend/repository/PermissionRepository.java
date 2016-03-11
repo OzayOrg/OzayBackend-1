@@ -3,10 +3,8 @@ package com.ozay.backend.repository;
 import com.ozay.backend.model.Permission;
 import com.ozay.backend.resultsetextractor.PermissionSetExtractor;
 import com.ozay.backend.security.SecurityUtils;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.stereotype.Repository;
 
 import javax.inject.Inject;

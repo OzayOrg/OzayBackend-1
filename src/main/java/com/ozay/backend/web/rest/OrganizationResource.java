@@ -43,8 +43,9 @@ public class OrganizationResource {
     @Timed
     public ResponseEntity<?> createOrganization(@RequestBody Organization organization) {
         log.debug("REST request to save organization : {}", organization);
-        User user = userService.getUserWithAuthorities();
-        organization.setUserId(user.getId());
+//        User user = userService.getUserWithAuthorities();
+        organization.setUserId(1);
+
         organizationRepository.create(organization);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
